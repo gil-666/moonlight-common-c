@@ -1,7 +1,7 @@
 #include "Limelight-internal.h"
 
 #define FIRST_FRAME_MAX 1500
-#define FIRST_FRAME_TIMEOUT_SEC 10
+#define FIRST_FRAME_TIMEOUT_SEC 30
 
 #define FIRST_FRAME_PORT 47996
 
@@ -18,7 +18,7 @@ static PLT_THREAD decoderThread;
 
 static bool receivedDataFromPeer;
 static uint64_t firstDataTimeMs;
-static bool receivedFullFrame;
+static volatile bool receivedFullFrame;
 
 // We can't request an IDR frame until the depacketizer knows
 // that a packet was lost. This timeout bounds the time that
@@ -416,4 +416,8 @@ int startVideoStream(void* rendererContext, int drFlags) {
 
 const RTP_VIDEO_STATS* LiGetRTPVideoStats(void) {
     return &rtpQueue.stats;
+}
+
+bool LiHasReceivedVideoFrame(void) {
+    return receivedFullFrame;
 }

@@ -904,6 +904,11 @@ typedef struct _RTP_VIDEO_STATS {
 
 const RTP_VIDEO_STATS* LiGetRTPVideoStats(void);
 
+// Returns true after the first complete video frame has been received.
+// This is useful for keeping connection UI visible while a host capture
+// session is still starting.
+bool LiHasReceivedVideoFrame(void);
+
 // Port index flags for use with LiGetPortFromPortFlagIndex() and LiGetProtocolFromPortFlagIndex()
 #define ML_PORT_INDEX_TCP_47984 0
 #define ML_PORT_INDEX_TCP_47989 1
